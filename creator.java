@@ -7,9 +7,9 @@ public class creator extends Thread{
 	protected Segment segmentGtoE = new Segment(1000,1);
 	protected Segment segmentEtoL1 = new Segment(1000,1);
 	protected Segment segmentEtoL2 = new Segment(1000,1);
-	protected ArrayList<Track> route = new ArrayList<Track>();
+	protected ArrayList<Track> route = new ArrayList<Track>();//all tracks are added into this
 	
-	
+	//constructing a creator would create a route which includes stations and segments
 	public creator() {
 		route.add(glasgow);
 		route.add(segmentGtoE);
@@ -21,8 +21,9 @@ public class creator extends Thread{
 	
 	public void run() {
 		while(true) {
-			Train newTrain = new Train(0,route.get(0));
-			route.get(0).addTrain(newTrain);
+			//generate a new train, the location will be changed in the addTrain() method
+			Train newTrain = new Train(new Random().nextInt(2),route.get(0));  
+			route.get(0).addTrain(newTrain); //add train to the start of the route
 			System.out.println("added");
 			newTrain.start();
 			System.out.println("train started");

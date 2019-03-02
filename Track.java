@@ -39,9 +39,8 @@ public class Track {
 	// Add a train to the track
 	public void addTrain(Train train) {
 		lock.lock();
-		while (capacity > 0) {
-			train.setType(new Random().nextInt(2));
-			train.setLocation(this);
+		while (capacity > 0) { //make sure there is still capacity in the track
+			train.setLocation(this); 
 			cond.signalAll();
 		}
 		this.setCapacity(capacity-1);

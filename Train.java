@@ -53,17 +53,21 @@ public class Train extends Thread {
 
 	public void run() {
 		route = create.route;
-
-		// remove the train on the last track
-		if (this.getLocation() == route.get(route.size() - 1)) {
-			route.get(route.size() - 1).removeTrain(this);
+		while (true) {
+			// remove the train on the last track
+			if (this.getLocation() == route.get(route.size() - 1)) {// if the train is at the end of the route
+				route.get(route.size() - 1).removeTrain(this);
+				break;
+			}
+			// move the trains forward
+			for (int i = 0; i < route.size() - 1; i++) {
+				if (this.getLocation() == route.get(i)) {
+					route.get(i + 1).addTrain(this);
+					route.get(i).removeTrain(this);
+					break;
+				}
+			}
 		}
-		// move the trains forward
-		for (int i = 0; i < route.size() - 1; i++) {
-			route.get(i + 1).addTrain(this);
-			route.get(i).removeTrain(this);
-		}
-
 	}
 
 }

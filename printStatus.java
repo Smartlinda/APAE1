@@ -1,7 +1,5 @@
 
 public class printStatus extends Thread{
-	protected Track track;
-	protected Train train;
 	protected creator create;
 
 	public void run() {
