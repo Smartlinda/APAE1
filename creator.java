@@ -22,7 +22,8 @@ public class creator extends Thread{
 	public void run() {
 		while(true) {
 			//generate a new train, the location will be changed in the addTrain() method
-			Train newTrain = new Train(new Random().nextInt(2),route.get(0));  
+			Train newTrain = new Train(new Random().nextInt(2),route.get(0));
+			newTrain.create = this;
 			route.get(0).addTrain(newTrain); //add train to the start of the route
 			System.out.println("added");
 			newTrain.start();

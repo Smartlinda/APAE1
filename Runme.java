@@ -3,8 +3,9 @@ public class Runme {
 
 	public static void main(String[] args) {
 		creator create = new creator();
-		create.run();
+		create.start();
 		printStatus print = new printStatus();
+		print.create = create;
 		print.start();
 		try {
 			create.join();
