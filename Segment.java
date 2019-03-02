@@ -13,7 +13,7 @@ public class Segment extends Track{
 	public void removeTrain(Train train) {
 		lock.lock();
 		try {
-			Thread.sleep((length/train.getSpeed())*1000);
+			train.sleep((length/train.getSpeed())*1000);
 			cond.await();
 			train.setLocation(null);
 		}catch(InterruptedException e) {

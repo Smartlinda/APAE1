@@ -63,7 +63,6 @@ public class Train extends Thread {
 			for (int i = 0; i < route.size() - 1; i++) {
 				if (this.getLocation() == route.get(i)) {
 					route.get(i + 1).addTrain(this);
-					route.get(i).removeTrain(this);
 					break;
 				}
 			}
