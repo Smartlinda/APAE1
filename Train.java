@@ -6,7 +6,7 @@ public class Train extends Thread {
 	protected int speed;
 	protected Track location;
 	protected int trainID;
-	protected int nextID = 0;
+	protected static int nextID = 1;
 	protected ArrayList<Track> route;
 	protected creator create;
 
@@ -54,6 +54,14 @@ public class Train extends Thread {
 	public void run() {
 		route = create.route;
 		while (true) {
+			try {
+				if (this.getLocation() instanceof Segment) {
+					Thread.sleep((this.getLocation().length / this.getSpeed()) * 1000);
+				}else if (this.getLocation() instanceof Station) {
+					Thread.sleep((this.getLocation().length / this.getSpeed()+5) * 1000);
+				}
+			}catch(InterruptedException e){
+			}
 			// remove the train on the last track
 			if (this.getLocation() == route.get(route.size() - 1)) {// if the train is at the end of the route
 				route.get(route.size() - 1).removeTrain(this);
@@ -63,6 +71,8 @@ public class Train extends Thread {
 			for (int i = 0; i < route.size() - 1; i++) {
 				if (this.getLocation() == route.get(i)) {
 					route.get(i + 1).addTrain(this);
+					route.get(i).trainsInside.remove(this);
+					route.get(i).setCapacity(route.get(i).getCapacity()+1);
 					break;
 				}
 			}

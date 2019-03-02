@@ -9,17 +9,20 @@ public class Station extends Track{
 	 * the time a train stays in a segment and station are
 	 * different
 	*/
-	public void removeTrain(Train train) {
-		lock.lock();
-		try {
-			train.sleep((length/train.getSpeed()+5)*1000);
-			cond.await();
-			train.setLocation(null);
-		}catch(InterruptedException e) {
-            e.printStackTrace();
-		}
-		capacity += 1;
-		lock.unlock();
-	}
+//	public void removeTrain(Train train) {
+//		lock.lock();
+////		try {
+////			cond.await();
+//			System.out.println("train " + train.trainID + "wake up");
+//			train.setLocation(null);
+//			this.setCapacity(capacity + 1);
+//			trainsInside.remove(train);
+////		} catch (InterruptedException e) {
+////			e.printStackTrace();
+////		} finally {
+//			lock.unlock();
+//			cond.signalAll();
+////		}
+//	}
 	
 }

@@ -38,26 +38,32 @@ public class Track {
 	// Add a train to the track
 	public void addTrain(Train train) {
 		lock.lock();
-		while (capacity > 0) { //make sure there is still capacity in the track
-			train.setLocation(this); 
-			cond.signalAll();
+		try {
+			while (capacity == 0) { // make sure there is still capacity in the track
+				train.setLocation(this);
+				cond.await();
+			}
+			this.setCapacity(capacity - 1);
+			trainsInside.add(train);
+		} catch (InterruptedException e) {
+
+		} finally {
+			lock.unlock();
 		}
-		this.setCapacity(capacity-1);
-		trainsInside.add(train);
-		lock.unlock();
 	}
 
 	// Remove a train from the track and add it to the next Track
 	public void removeTrain(Train train) {
 		lock.lock();
-		try {
-			cond.await();
+//		try {
+//			cond.await();
 			train.setLocation(null);
-		}catch(InterruptedException e) {
-            e.printStackTrace();
-		}
-		this.setCapacity(capacity+1);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+		this.setCapacity(capacity + 1);
 		trainsInside.remove(train);
 		lock.unlock();
+		cond.signalAll();
 	}
 }
